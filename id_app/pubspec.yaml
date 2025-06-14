@@ -64,6 +64,8 @@ flutter:
 # To add custom icons to your application, add an icons section here,
   assets:
     - assets/images/id_photo.jpeg
+    - assets/images/nitte_logo.png
+    - assets/images/barcode.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

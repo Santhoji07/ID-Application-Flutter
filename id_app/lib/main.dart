@@ -27,7 +27,6 @@ class _IDCardAppState extends State<IDCardApp> {
 
   Future<void> pickImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
@@ -54,10 +53,18 @@ class _IDCardAppState extends State<IDCardApp> {
         content: SingleChildScrollView(
           child: Column(
             children: [
-              TextField(controller: nameCtrl, decoration: const InputDecoration(labelText: "Name")),
-              TextField(controller: collegeCtrl, decoration: const InputDecoration(labelText: "College")),
-              TextField(controller: courseCtrl, decoration: const InputDecoration(labelText: "Course")),
-              TextField(controller: usnCtrl, decoration: const InputDecoration(labelText: "USN")),
+              TextField(
+                  controller: nameCtrl,
+                  decoration: const InputDecoration(labelText: "Name")),
+              TextField(
+                  controller: collegeCtrl,
+                  decoration: const InputDecoration(labelText: "College")),
+              TextField(
+                  controller: courseCtrl,
+                  decoration: const InputDecoration(labelText: "Course")),
+              TextField(
+                  controller: usnCtrl,
+                  decoration: const InputDecoration(labelText: "USN")),
             ],
           ),
         ),
@@ -82,57 +89,104 @@ class _IDCardAppState extends State<IDCardApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
         title: const Text("ID Card"),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: const Color(0xFFfbb900), // Yellow top bar like ID
         actions: [
           IconButton(onPressed: editDetails, icon: const Icon(Icons.edit)),
         ],
       ),
       body: Center(
         child: Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          elevation: 6,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           margin: const EdgeInsets.all(20),
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            width: 350,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                GestureDetector(
-                  onTap: pickImage,
-                  onLongPress: removeImage,
-                  child: CircleAvatar(
-                    radius: 60,
-                    backgroundImage: _image != null
-                        ? FileImage(_image!) as ImageProvider
-                        : const AssetImage('assets/images/id_photo.jpeg'),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                color: const Color(0xFFfbb900),
+                padding: const EdgeInsets.all(8),
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    Image.asset('assets/images/nitte_logo.png',
+                        height: 60), // Replace with actual logo asset
+                    const SizedBox(height: 4),
+                    //const Text(
+                    // 'NMAM INSTITUTE\nOF TECHNOLOGY',
+                    // textAlign: TextAlign.center,
+                    //style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black),
+                    //),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 50),
+              GestureDetector(
+                onTap: pickImage,
+                onLongPress: removeImage,
+                child: ClipRRect(
+                  borderRadius:
+                      BorderRadius.circular(8), // Rounded corners (optional)
+                  child: Image(
+                    image: _image != null
+                        ? FileImage(_image!)
+                        : const AssetImage('assets/images/id_photo.jpeg')
+                            as ImageProvider,
+                    width: 120,
+                    height: 140,
+                    fit: BoxFit.cover,
                   ),
                 ),
-                const SizedBox(height: 15),
-                Text(name, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                const Divider(),
-                infoRow("College", college),
-                infoRow("Course", course),
-                infoRow("USN", usn),
-              ],
-            ),
+              ),
+              const SizedBox(height: 8),
+              Text(name,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Color.fromARGB(255, 17, 99, 165))),
+              const SizedBox(height: 10),
+              idDetail("College", college),
+              idDetail("Course", course),
+              idDetail("USN", usn),
+              const SizedBox(height: 20),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: Image.asset('assets/images/barcode.png',
+                      height: 100), // placeholder barcode
+                ),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text("Principal",
+                        style: TextStyle(fontStyle: FontStyle.italic)),
+                    Text("NNM24MC134",
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget infoRow(String title, String value) {
+  Widget idDetail(String title, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
       child: Row(
         children: [
-          Text("$title:", style: const TextStyle(fontWeight: FontWeight.bold)),
+          Text("$title :", style: const TextStyle(fontWeight: FontWeight.bold)),
           const SizedBox(width: 10),
-          Flexible(child: Text(value)),
+          Text(value, style: const TextStyle(fontWeight: FontWeight.w600)),
         ],
       ),
     );
