@@ -1,15 +1,12 @@
 # ID-Application-Flutter
 
-A cross-platform Flutter application for securely managing and displaying identification documents digitally. This project aims to provide a user-friendly and safe solution for storing, viewing, and sharing digital IDs.
+A cross-platform Flutter application for securely managing and displaying identification documents digitally. This project aims to provide a user-friendly and safe solution for storing and viewing digital IDs.
 
 ## 🚀 Features
 
-- Securely store multiple identification documents
+- Store multiple identification documents
 - View digital ID cards with QR/Barcode
-- Add, edit, or remove your IDs
-- Organize and search your documents efficiently
-- Offline access to your saved IDs
-- Authentication and data protection
+- Edit Details your IDs
 
 ## 🛠️ Getting Started
 
